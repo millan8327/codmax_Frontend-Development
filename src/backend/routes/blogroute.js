@@ -29,4 +29,25 @@ router.get("/", async (req, res) => {
 
     res.json(blogs);
 });
+
+router.get("/:id", async (req, res) => {
+    try {
+        const blog = await modelnewblog.findById(req.params.id);
+
+        if (!blog) {
+            return res.status(404).json({
+                message: "Blog not found"
+            });
+        }
+
+        res.status(200).json(blog);
+
+    } catch (error) {
+        res.status(500).json({
+            message: "Failed to get blog",
+            error: error.message
+        });
+    }
+});
+
 module.exports=router;

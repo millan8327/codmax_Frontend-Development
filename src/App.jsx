@@ -1,5 +1,5 @@
 import { BrowserRouter, Routes, Route } from "react-router-dom";
-
+import BlogDetails from "./pages/blogdetails";
 import Navbar from "./components/Navbar";
 import Home from "./pages/Home";
 import Login from "./pages/login";
@@ -18,6 +18,7 @@ function App() {
         <Route path="/register" element={<Register />} />
         <Route path="/dashboard" element={<Dashboard />} />
         <Route path="/create-blog" element={<CreateBlog />} />
+        <Route path="/blog/:id" element={<BlogDetails />} />
       </Routes>
     </BrowserRouter>
   );

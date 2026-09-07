@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react";
-
+import { Link } from "react-router-dom";
 function Home() {
 
   const [blogs, setBlogs] = useState([]);
@@ -63,9 +63,12 @@ function Home() {
                 Category: {blog.category}
               </p>
 
-              <button className="mt-5 bg-gray-900 text-white px-4 py-2 rounded-lg">
-                Read More
-              </button>
+              <Link
+              to={`/blog/${blog._id}`}
+              className="inline-block mt-5 bg-gray-900 text-white px-4 py-2 rounded-lg"
+              >
+             Read More
+            </Link>
 
             </div>
 
