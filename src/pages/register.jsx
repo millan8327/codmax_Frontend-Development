@@ -1,71 +1,91 @@
-import { Link } from "react-router-dom";
+
+import { useState } from "react";
 
 function Register() {
+  const [formData, setFormData] = useState({
+    Name: "",
+    email: "",
+    password: "",
+  });
+
+  const handleChange = (e) => {
+    setFormData({
+      ...formData,
+      [e.target.name]: e.target.value,
+    });
+  };
+
+  const handleSubmit = async (e) => {
+    e.preventDefault();
+
+    try {
+      const response = await fetch(
+        "http://localhost:8080/api/auth/register",
+        {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify(formData),
+        }
+      );
+
+      const data = await response.json();
+
+      console.log(data);
+    } catch (error) {
+      console.log(error);
+    }
+  };
+
   return (
     <div className="min-h-screen bg-gray-100 flex items-center justify-center">
-      <div className="bg-white p-8 rounded-xl shadow-md w-full max-w-md">
+      <div className="w-full max-w-md bg-white p-8 rounded-2xl shadow-lg">
 
-        <h1 className="text-3xl font-bold text-center mb-6">
-          Create Account
-        </h1>
+        <h2 className="text-3xl font-bold text-center mb-6">
+          Register
+        </h2>
 
-        <form className="space-y-4">
+        <form
+          onSubmit={handleSubmit}
+          className="flex flex-col gap-4"
+        >
 
-          <div>
-            <label className="block mb-1 font-medium">
-              Name
-            </label>
+          <input
+            type="text"
+            name="name"
+            placeholder="Enter Name"
+            value={formData.name}
+            onChange={handleChange}
+            className="w-full px-4 py-3 border rounded-lg"
+          />
 
-            <input
-              type="text"
-              placeholder="Enter your name"
-              className="w-full border p-3 rounded-lg"
-            />
-          </div>
+          <input
+            type="email"
+            name="email"
+            placeholder="Enter Email"
+            value={formData.email}
+            onChange={handleChange}
+            className="w-full px-4 py-3 border rounded-lg"
+          />
 
-          <div>
-            <label className="block mb-1 font-medium">
-              Email
-            </label>
-
-            <input
-              type="email"
-              placeholder="Enter your email"
-              className="w-full border p-3 rounded-lg"
-            />
-          </div>
-
-          <div>
-            <label className="block mb-1 font-medium">
-              Password
-            </label>
-
-            <input
-              type="password"
-              placeholder="Create a password"
-              className="w-full border p-3 rounded-lg"
-            />
-          </div>
+          <input
+            type="password"
+            name="password"
+            placeholder="Enter Password"
+            value={formData.password}
+            onChange={handleChange}
+            className="w-full px-4 py-3 border rounded-lg"
+          />
 
           <button
             type="submit"
-            className="w-full bg-gray-900 text-white p-3 rounded-lg"
+            className="w-full bg-blue-600 text-white py-3 rounded-lg hover:bg-blue-700"
           >
             Register
           </button>
 
         </form>
-
-        <p className="text-center mt-5">
-          Already have an account?{" "}
-          <Link
-            to="/login"
-            className="text-blue-600 font-semibold"
-          >
-            Login
-          </Link>
-        </p>
-
       </div>
     </div>
   );
