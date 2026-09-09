@@ -1,3 +1,4 @@
+require("dotenv").config();
 const server=require("express");
 const app=server();
 const port=8080;
